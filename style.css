@@ -9,7 +9,7 @@ body {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  perspective: 80px;
+  perspective: 800px;
   
   * {
     transform-style: preserve-3d;
