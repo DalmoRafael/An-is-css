@@ -1,0 +1,64 @@
+*, *::before, *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+  background-image: radial-gradient(circle, #eee, #bbb 500px);
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  perspective: 800px;
+  
+  * {
+    transform-style: preserve-3d;
+  }
+}
+
+.rings {
+  position: relative;
+  rotate: x -10deg;
+}
+
+.ring {
+  position: absolute;
+  transform: translate(var(--translate));
+
+  &.ring__1 { --ringColor: #0081c8; --duration: 3.2s; --translate: -240px, -40px; }
+  &.ring__2 { --ringColor: #fcb131; --duration: 2.6s; --translate: -120px, 40px; }
+  &.ring__3 { --ringColor: #444444; --duration: 3.0s; --translate: 0, -40px; }
+  &.ring__4 { --ringColor: #00a651; --duration: 3.4s; --translate: 120px, 40px; }
+  &.ring__5 { --ringColor: #ee334e; --duration: 2.8s; --translate: 240px, -40px; }
+
+  i {
+    --translateZ: calc(var(--i) * 2px);
+    --light: calc(var(--i) / 16);
+    --layerColor: rgb(from var(--ringColor) calc(r * var(--light)) calc(g * var(--light)) calc(b * var(--light)));
+    --size: calc(sin(var(--i) * 11.25deg) * 16px);
+
+    position: absolute;
+    inset: -100px;
+    border: var(--size) var(--layerColor) solid;
+    outline: var(--size) var(--layerColor) solid;
+    border-radius: 50%;
+    animation: ring var(--duration) -10s infinite ease-in-out alternate;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -100px;
+    border: 24px #0003 solid;
+    outline: 24px #0003 solid;
+    border-radius: 50%;
+    translate: 0 -100px -400px;
+    filter: blur(12px);
+    animation: ring var(--duration) -10s infinite ease-in-out alternate;
+  }
+}
+
+@keyframes ring {
+  from { transform: rotateY(-45deg) translateZ(var(--translateZ, 0)); }
+  to { transform: rotateY(45deg) translateZ(var(--translateZ, 0)); }
+}
